@@ -53,7 +53,27 @@ Modelo escolhido: **Trunk-Based Development**: branches `feature/*` e `hotfix/*`
 | Merge ou hotfix 2 | PENDENTE |
 
 ## 7. CI e cobertura
-`ci.yml` executa linter, testes unitários, integração e E2E. Depois, coleta cobertura JSON e roda `scripts/check_coverage.py`, que falha quando linhas <85% ou branches <80%. Artefatos: `coverage.json` e `test-results.xml`. No GitHub, configurar proteção de `main` exigindo PR e o status check `quality-and-tests` antes do merge. **Preencher após executar:** cobertura linhas = ___%; branches = ___%; link da execução = ___.
+`ci.yml` executa linter, testes unitários, integração e E2E. Depois, coleta cobertura JSON e roda `scripts/check_coverage.py`, que falha quando linhas <85% ou branches <80%. Artefatos: `coverage.json` e `test-results.xml`. No GitHub, configurar proteção de `main` exigindo PR e o status check `quality-and-tests` antes do merge. 
+
+**Resultados da execução local**
+
+Testes automatizados: 25 aprovados, 0 falhas.
+
+Cobertura de statements: 99,49% (196 de 197).
+
+Cobertura de branches: 96,88% (31 de 32).
+
+Análise estática: Ruff aprovado, sem erros.
+
+Pipeline GitHub Actions: execução inicial concluída com sucesso.
+
+Job: quality-and-tests.
+
+Status: Success.
+
+O pipeline executou as etapas de instalação de dependências, análise estática, testes unitários, testes de integração, testes E2E, verificação de cobertura e armazenamento de relatórios.
+
+Link da execução: https://github.com/Niceas-Martins/projeto-self-testing-ci-/actions/runs/43939050010
 
 ## 8. Concorrência e idempotência
 Transferências são processadas com lock local entre threads e transações SQLite `BEGIN IMMEDIATE`, serializando escritores. A chave única da transferência é gravada na mesma transação do débito, crédito e extrato. Requisições repetidas com mesma chave não descontam saldo novamente. O teste com ThreadPoolExecutor envia 50 chamadas concorrentes a um saldo finito e verifica saldo conservado.
@@ -77,3 +97,28 @@ Projeto didático, não apto a uso financeiro real: não há autenticação, aut
 - PyTest: https://docs.pytest.org/
 - GitHub Actions: https://docs.github.com/en/actions
 - k6: https://grafana.com/docs/k6/latest/
+
+## Evidências de Integração Contínua
+
+O projeto utiliza GitHub Actions para executar
+automaticamente verificações de qualidade e testes.
+
+Na primeira execução do workflow Wallet CI,
+foram concluídas as seguintes etapas:
+
+- Instalação das dependências.
+- Análise estática com Ruff.
+- Testes unitários com PyTest.
+- Testes de integração.
+- Testes End-to-End.
+- Verificação de cobertura de código.
+- Armazenamento de relatórios e logs.
+
+A execução inicial foi concluída com sucesso.
+
+### Cobertura verificada localmente
+
+- Testes aprovados: 25 de 25.
+- Cobertura de statements: 196/197 (99,49%).
+- Cobertura de branches: 31/32 (96,88%).
+- Linter: aprovado.
