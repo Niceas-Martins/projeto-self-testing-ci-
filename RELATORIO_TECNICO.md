@@ -49,7 +49,7 @@ Modelo escolhido: **Trunk-Based Development**: branches `feature/*` e `hotfix/*`
 | RED | PENDENTE |
 | GREEN | PENDENTE |
 | REFACTOR | PENDENTE |
-| Merge ou hotfix 1 | PENDENTE |
+| Merge ou hotfix 1 | https://github.com/Niceas-Martins/projeto-self-testing-ci-/pull/1|
 | Merge ou hotfix 2 | PENDENTE |
 
 ## 7. CI e cobertura
