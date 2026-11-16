@@ -1,0 +1,35 @@
+name: Wallet CI
+on:
+  push:
+    branches: [main, 'feature/**', 'hotfix/**']
+  pull_request:
+    branches: [main]
+jobs:
+  quality-and-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Instalar dependências
+        run: python -m pip install -r requirements.txt
+      - name: Linter
+        run: python -m ruff check src tests scripts
+      - name: Testes unitários
+        run: python -m pytest tests/unit -v
+      - name: Testes de integração
+        run: python -m pytest tests/integration -v
+      - name: Testes E2E e cobertura de branches e linhas
+        run: |
+          python -m pytest tests/e2e -v
+          python -m pytest --cov=src --cov-branch --cov-report=term-missing --cov-report=json:coverage.json --junitxml=test-results.xml
+          python scripts/check_coverage.py
+      - name: Salvar relatórios e logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: testes-e-cobertura
+          path: |
+            coverage.json
+            test-results.xml
