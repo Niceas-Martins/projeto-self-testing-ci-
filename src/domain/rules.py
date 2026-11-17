@@ -17,8 +17,13 @@ def to_cents(value: Decimal | str | int) -> int:
         raise BusinessError("Valor deve ser não negativo e ter no máximo duas casas decimais")
     return int(amount * 100)
 
+def validate_account_ids(origin: int, destination: int) -> None:
+    if origin <= 0 or destination <= 0:
+        raise BusinessError("IDs das contas devem ser positivos")
+
 
 def transfer_rules(origin: int, destination: int, balance_cents: int, amount_cents: int) -> None:
+    validate_account_ids(origin, destination)
     if origin == destination:
         raise BusinessError("Contas de origem e destino devem ser diferentes")
     if amount_cents <= 0:
