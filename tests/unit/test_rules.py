@@ -29,3 +29,15 @@ def test_invalid_transfer(origin, destination, balance, amount, code):
     with pytest.raises(BusinessError) as error:
         transfer_rules(origin, destination, balance, amount)
     assert error.value.status_code == code
+
+@pytest.mark.parametrize("origin,destination", [
+    (0, 2),
+    (-1, 2),
+    (1, 0),
+    (1, -2),
+])
+def test_transfer_rejects_invalid_account_ids(origin, destination):
+    with pytest.raises(BusinessError) as error:
+        transfer_rules(origin, destination, 1000, 100)
+
+    assert error.value.status_code == 400
