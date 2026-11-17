@@ -84,10 +84,10 @@ Iniciar API: `python -m uvicorn src.main:app`. Executar (k6 instalado): `k6 run 
 | Indicador | Valor observado |
 |---|---|
 | VUs simultâneos | 50 |
-| Total de requisições | PENDENTE |
-| Taxa de erro (`http_req_failed`) | PENDENTE |
-| Latência média (`http_req_duration avg`) | PENDENTE |
-| Latência p95 | PENDENTE |
+| Total de requisições | 125 |
+| Taxa de erro (`http_req_failed`) | 0,00% |
+| Latência média (`http_req_duration avg`) | 7,89 s |
+| Latência p95 | 10,19 s |
 
 ## 10. Limitações e próximos passos
 Projeto didático, não apto a uso financeiro real: não há autenticação, autorização, criptografia de dados sensíveis, reconciliação com bancos reais nem retentativas persistentes de webhooks. Antifraude é uma interface fictícia sem HTTP real; para enviar um webhook verdadeiro, implementar cliente HTTP injetável, autenticação do evento, outbox e retentativas. SQLite serializa escritores e não deve ser tratado como solução escalável para produção. `TestClient` executa a API internamente sobre HTTP simulado (ASGI), não por porta TCP de rede; para E2E externo pode-se usar HTTPX contra servidor Uvicorn real.
@@ -122,3 +122,15 @@ A execução inicial foi concluída com sucesso.
 - Cobertura de statements: 196/197 (99,49%).
 - Cobertura de branches: 31/32 (96,88%).
 - Linter: aprovado.
+
+### Evidência prática de TDD
+
+Foi realizado um ciclo Red-Green-Refactor para implementar a validação de identificadores de contas em transferências financeiras.
+
+**RED:** foram criados quatro casos de teste para IDs inválidos, inicialmente sem implementação correspondente, demonstrando as falhas.
+
+**GREEN:** foi implementada a validação dos identificadores, permitindo que os novos testes fossem aprovados.
+
+**REFACTOR:** a validação foi extraída para uma função independente, preservando o comportamento e a aprovação dos testes.
+
+As três etapas foram registradas em commits separados na branch `feature/validacao-ids-tdd`.
