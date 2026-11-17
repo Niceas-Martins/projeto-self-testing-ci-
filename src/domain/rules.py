@@ -19,6 +19,8 @@ def to_cents(value: Decimal | str | int) -> int:
 
 
 def transfer_rules(origin: int, destination: int, balance_cents: int, amount_cents: int) -> None:
+    if origin <= 0 or destination <= 0:
+       raise BusinessError("IDs das contas devem ser positivos")
     if origin == destination:
         raise BusinessError("Contas de origem e destino devem ser diferentes")
     if amount_cents <= 0:
